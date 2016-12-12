@@ -3,8 +3,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
+using System.Runtime.InteropServices;
+
 
 public class PVA : MonoBehaviour
 {
@@ -67,13 +68,27 @@ struct DetectNotify {
 	[DllImport("PVA")]
 	private static extern int PVA_endBall();
 
+    public CubeBehaviour m_Parent;
+
 	// Use this for initialization
-	void Start () {
-		if( m_bPVA == 0 )
+	void Start ()
+    {
+        m_Parent.AddLogMsg("0 PVA Start() m_bPVA " + m_bPVA);
+        if ( m_bPVA == 0 )
 		{
-			PVA_init();
-			m_bPVA = 1;
-		}
+            m_Parent.AddLogMsg("1 PVA Update() m_bPVA " + m_bPVA);
+            PVA_init();
+
+            m_Parent.AddLogMsg("2 PVA Update() m_bPVA " + m_bPVA);
+            m_bPVA = 1;
+
+            m_Parent.AddLogMsg("3 PVA Update() m_bPVA " + m_bPVA);
+        }
+        else
+        {
+            Debug.Log("2");
+            m_Parent.AddLogMsg("PVA_init... not m_bPVA 0");
+        }
 	}
 	void OnDestroy(){
 		if( m_bPVA != 0 )
@@ -86,10 +101,11 @@ struct DetectNotify {
 	// Update is called once per frame
 	void Update ()
 	{
-		if( m_bPVA != 0 )
+        
+        if ( m_bPVA != 0 )
 		{
 			int status = PVA_getCamraStatus();
-			if( m_status != status ){
+            if ( m_status != status ){
 				m_status = status;
 
 				string text;
@@ -115,6 +131,7 @@ struct DetectNotify {
 				}
 				Debug.Log("getCamraStatus = " + text);
 			}
+
 			if( m_ball_start != 0 ){
 				int ret = PVA_getDetect( ref m_detect );
 				if( ret == PVAResult_OK ){
@@ -161,6 +178,7 @@ struct DetectNotify {
 				}
 			}
 		}
+
 		if( Input.GetMouseButtonDown(0) ){
 #if Enable_DetectNotify
 			if( m_status == PVAResult_OK ){
@@ -188,6 +206,8 @@ struct DetectNotify {
 #endif
 		}
 	}
+
+    
 	void OnGUI()
 	{
 		Event e = Event.current;
@@ -207,11 +227,28 @@ struct DetectNotify {
 			}
 		}
 	}
+    
+
+    public void BallInit()
+    {
+        PVA_config(IntPtr.Zero);
+    }
+
+    public void StartBall()
+    {
+        if (m_status == PVAResult_OK)
+        {
+            PVA_startBall();
+            m_ball_start = 1;
+        }
+    }
+
 	private GameObject LoadBullet()
 	{
 		GameObject bullet = Instantiate(prefab);
 		return bullet;
 	}
+
 	public GameObject prefab;
 	public float power;
 

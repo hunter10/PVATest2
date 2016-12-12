@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class SerialMessageListener : MonoBehaviour {
 
+    public CubeBehaviour m_Parent;
+
     // Invoked when a line of data is received from the serial device.
     void OnMessageArrived(string msg)
     {
         Debug.Log("Message arrived: " + msg);
+        m_Parent.AddLogMsg("Message arrived: " + msg);
     }
 
     // Invoked when a connect/disconnect event occurs. The parameter 'success'

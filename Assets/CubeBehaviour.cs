@@ -31,6 +31,7 @@ public class CubeBehaviour : MonoBehaviour {
 	private extern static int PVA_endBall();
 
     private Text m_LogMsg;
+    public PVA m_pva;
 
 
     private void Awake()
@@ -44,56 +45,6 @@ public class CubeBehaviour : MonoBehaviour {
         m_LogMsg.text += msg + "\n";
     }
 
-    // Use this for initialization
-    void Start () {
-	}
-
-	// Update is called once per frame
-	void Update () {
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            AddLogMsg(" 'c' OR 'C' pressed");
-
-            //if (m_bPVA == 0)
-            //{
-            //    PVA_init();
-            //    m_bPVA = 1;
-            //}
-            //int status = PVA_getCamraStatus();
-            //AddLogMsg("getCamraStatus = " + status);
-
-            ////Debug.Log("Detected character: " + e.character);
-            //PVA_config(IntPtr.Zero);
-        }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            AddLogMsg("space pressed");
-        }
-    }
-
-    /*
-	void OnGUI() {
-		Event e = Event.current;
-		if( e.isKey ){
-			if( e.character == 'c' || e.character == 'C' ){
-				if( m_bPVA == 0 )
-				{
-					PVA_init();
-					m_bPVA = 1;
-				}
-				int status = PVA_getCamraStatus();
-				Debug.Log("getCamraStatus = " + status);
-
-				//Debug.Log("Detected character: " + e.character);
-				PVA_config( IntPtr.Zero );
-			}
-			else if( e.character == ' ' ){
-				Debug.Log("space pressed");
-			}
-		}
-	}
-    */
-
 	void OnDestroy(){
 		//Debug.Log(this.gameObject.name+"OnDestroy");
 		if( m_bPVA != 0 )
@@ -103,5 +54,21 @@ public class CubeBehaviour : MonoBehaviour {
 		}
 	}
 	private int m_bPVA = 0;
-	//private uint uDetectNotify = 0;
+
+    public void Click_BallInit()
+    {
+        AddLogMsg("Ball Init...");
+        m_pva.BallInit();
+    }
+
+    public void Click_StartBall()
+    {
+        AddLogMsg("Start Ball!!");
+        m_pva.StartBall();
+    }
+
+    public void Click_HitBall()
+    {
+        AddLogMsg("Hit Ball!!");
+    }
 }
