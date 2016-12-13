@@ -103,6 +103,8 @@ public class SerialController : MonoBehaviour {
         }
         else
         {
+            // 시리얼 통신 시 이쪽으로 메세지 날아오는지 체크
+
             mParent.AddLogMsg("Message arrived: " + message);
             messageListener.SendMessage("OnMessageArrived", message);
         }

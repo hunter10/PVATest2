@@ -73,23 +73,14 @@ struct DetectNotify {
 	// Use this for initialization
 	void Start ()
     {
-        m_Parent.AddLogMsg("0 PVA Start() m_bPVA " + m_bPVA);
         if ( m_bPVA == 0 )
 		{
-            m_Parent.AddLogMsg("1 PVA Update() m_bPVA " + m_bPVA);
             PVA_init();
-
-            m_Parent.AddLogMsg("2 PVA Update() m_bPVA " + m_bPVA);
             m_bPVA = 1;
+        }
 
-            m_Parent.AddLogMsg("3 PVA Update() m_bPVA " + m_bPVA);
-        }
-        else
-        {
-            Debug.Log("2");
-            m_Parent.AddLogMsg("PVA_init... not m_bPVA 0");
-        }
-	}
+        m_Parent.AddLogMsg("PVA Start() m_bPVA " + m_bPVA);
+    }
 	void OnDestroy(){
 		if( m_bPVA != 0 )
 		{
@@ -206,28 +197,6 @@ struct DetectNotify {
 #endif
 		}
 	}
-
-    
-	void OnGUI()
-	{
-		Event e = Event.current;
-		if( e.isKey ){
-			if( e.character == 'c' || e.character == 'C' ){
-				//Debug.Log("Detected character: " + e.character);
-				PVA_config( IntPtr.Zero );
-			}
-			else if( e.character == ' ' ){
-				Debug.Log("space pressed");
-				if( m_status == PVAResult_OK ){
-					Debug.Log("startBall");
-
-					PVA_startBall();
-					m_ball_start = 1;
-				}
-			}
-		}
-	}
-    
 
     public void BallInit()
     {

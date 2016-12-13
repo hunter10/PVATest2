@@ -32,6 +32,7 @@ public class CubeBehaviour : MonoBehaviour {
 
     private Text m_LogMsg;
     public PVA m_pva;
+    public SerialController m_SerialContoller;
 
 
     private void Awake()
@@ -67,8 +68,24 @@ public class CubeBehaviour : MonoBehaviour {
         m_pva.StartBall();
     }
 
-    public void Click_HitBall()
+    // 이하 다 야구공 던짐
+
+    // LED Send
+    public void Click_SendSerialData_N()
     {
-        AddLogMsg("Hit Ball!!");
+        AddLogMsg("Send N");
+        m_SerialContoller.SendSerialMessage("N"); 
+    }
+
+    public void Click_SendSerialData_M()
+    {
+        AddLogMsg("Send M");
+        m_SerialContoller.SendSerialMessage("M"); 
+    }
+
+    public void Click_SendSerialData_Y()
+    {
+        AddLogMsg("Send Y");
+        m_SerialContoller.SendSerialMessage("Y");
     }
 }
